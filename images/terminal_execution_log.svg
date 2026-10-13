@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 700" width="100%" height="100%">
+  <defs>
+    <linearGradient id="termBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+    <filter id="boxShadow" x="-3%" y="-3%" width="106%" height="106%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="700" rx="14" fill="#030712" />
+
+  <g transform="translate(20, 20)" filter="url(#boxShadow)">
+    <rect width="920" height="660" rx="10" fill="url(#termBg)" stroke="#374151" stroke-width="1.2"/>
+    
+    <rect width="920" height="38" rx="10" fill="#1f2937"/>
+    <rect y="28" width="920" height="10" fill="#1f2937"/>
+    
+    <circle cx="22" cy="19" r="6" fill="#ef4444"/>
+    <circle cx="42" cy="19" r="6" fill="#f59e0b"/>
+    <circle cx="62" cy="19" r="6" fill="#10b981"/>
+    
+    <text x="460" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#9ca3af" text-anchor="middle" font-weight="600">terminal — bash — single-stage backend build and verification</text>
+
+    <g transform="translate(24, 58)" font-family="'Fira Code', 'JetBrains Mono', 'Courier New', monospace" font-size="11.8">
+      <!-- Command 1: docker build -->
+      <text y="15" fill="#10b981" font-weight="bold">user@devops-vm:~/ex2$ <tspan fill="#f3f4f6">docker build -t hw-backend:v1 .</tspan></text>
+      <text y="33" fill="#9ca3af">[+] Building 2.4s (10/10) FINISHED</text>
+      <text y="50" fill="#9ca3af"> =&gt; [internal] load build definition from Dockerfile                        0.0s</text>
+      <text y="67" fill="#9ca3af"> =&gt; [1/6] FROM docker.io/library/node:18-alpine                            0.0s</text>
+      <text y="84" fill="#9ca3af"> =&gt; [2/6] WORKDIR /app                                                     0.1s</text>
+      <text y="101" fill="#9ca3af"> =&gt; [3/6] COPY package.json ./                                             0.0s</text>
+      <text y="118" fill="#9ca3af"> =&gt; [4/6] RUN npm install --only=production                                1.8s</text>
+      <text y="135" fill="#9ca3af"> =&gt; [5/6] COPY server.js ./                                                0.0s</text>
+      <text y="152" fill="#38bdf8"> =&gt; naming to docker.io/library/hw-backend:v1                              0.0s</text>
+
+      <!-- Command 2: docker run -->
+      <text y="180" fill="#10b981" font-weight="bold">user@devops-vm:~/ex2$ <tspan fill="#f3f4f6">docker run -d --name app-single-stage -p 8080:3000 hw-backend:v1</tspan></text>
+      <text y="198" fill="#38bdf8">7b2c9e10a45f89c67d3412abef0123456789abcdef0123456789abcdef012345</text>
+
+      <!-- Command 3: docker ps -->
+      <text y="226" fill="#10b981" font-weight="bold">user@devops-vm:~/ex2$ <tspan fill="#f3f4f6">docker ps</tspan></text>
+      <text y="244" fill="#93c5fd">CONTAINER ID   IMAGE           COMMAND                  CREATED         STATUS         PORTS                    NAMES</text>
+      <text y="262" fill="#e5e7eb">7b2c9e10a45f   hw-backend:v1   "node server.js"         4 seconds ago   Up 3 seconds   0.0.0.0:8080-&gt;3000/tcp   app-single-stage</text>
+
+      <!-- Command 4: docker logs -->
+      <text y="292" fill="#10b981" font-weight="bold">user@devops-vm:~/ex2$ <tspan fill="#f3f4f6">docker logs app-single-stage</tspan></text>
+      <text y="310" fill="#fef08a" font-weight="bold">Server listening on port 3000</text>
+
+      <!-- Command 5: curl -i -->
+      <text y="340" fill="#10b981" font-weight="bold">user@devops-vm:~/ex2$ <tspan fill="#f3f4f6">curl -i http://localhost:8080/</tspan></text>
+      <text y="358" fill="#38bdf8">HTTP/1.1 200 OK</text>
+      <text y="375" fill="#cbd5e1">X-Powered-By: Express</text>
+      <text y="392" fill="#cbd5e1">Content-Type: application/json; charset=utf-8</text>
+      <text y="409" fill="#cbd5e1">Content-Length: 68</text>
+      <text y="426" fill="#cbd5e1">Date: Tue, 13 Oct 2026 03:30:15 GMT</text>
+      <text y="443" fill="#cbd5e1">Connection: keep-alive</text>
+      <text y="465" fill="#34d399" font-size="13" font-weight="bold">{"status":"success","message":"Hello from Docker Single-stage!"}</text>
+
+      <!-- Command 6: cleanup -->
+      <text y="505" fill="#10b981" font-weight="bold">user@devops-vm:~/ex2$ <tspan fill="#f3f4f6">docker stop app-single-stage &amp;&amp; docker rm app-single-stage</tspan></text>
+      <text y="523" fill="#fca5a5">app-single-stage</text>
+      <text y="541" fill="#fca5a5">app-single-stage</text>
+
+      <!-- Command 7: verify cleanup -->
+      <text y="571" fill="#10b981" font-weight="bold">user@devops-vm:~/ex2$ <tspan fill="#f3f4f6">docker ps -a</tspan></text>
+      <text y="589" fill="#93c5fd">CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES</text>
+
+      <text y="620" fill="#10b981" font-weight="bold">user@devops-vm:~/ex2$ <tspan fill="#6ee7b7">echo Hoan tat kiem thu dong goi Single-stage</tspan></text>
+    </g>
+  </g>
+</svg>
